@@ -1,0 +1,50 @@
+---
+# Source: go-demo-7/templates/deployment.yaml
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: go-demo-7-go-demo-7
+  labels:
+    draft: draft-app
+    chart: "go-demo-7-0.1.0-SNAPSHOT"
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        draft: draft-app
+        app: go-demo-7-go-demo-7
+    spec:
+      containers:
+      - name: go-demo-7
+        image: "draft:dev"
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: DB
+          value: go-demo-7-go-demo-7-db
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /demo/hello?health=true
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        readinessProbe:
+          httpGet:
+            path: /demo/hello?health=true
+            port: 8080
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+            limits:
+              cpu: 100m
+              memory: 256Mi
+            requests:
+              cpu: 80m
+              memory: 128Mi
+            
+      terminationGracePeriodSeconds: 10

@@ -1,0 +1,78 @@
+---
+# Source: go-demo-7/charts/go-demo-7-db/templates/statefulset-arbiter-rs.yaml
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: go-demo-7-db
+    chart: go-demo-7-db-5.3.0
+    heritage: Tiller
+    release: go-demo-7
+  name: go-demo-7-go-demo-7-db-arbiter
+spec:
+  selector:
+    matchLabels:
+      app: go-demo-7-db
+      release: go-demo-7
+      component: arbiter
+  serviceName: go-demo-7-go-demo-7-db-headless
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: go-demo-7-db
+        chart: go-demo-7-db-5.3.0
+        release: go-demo-7
+        component: arbiter
+    spec:
+      securityContext:
+        fsGroup: 1001
+        runAsUser: 1001
+      containers:
+        - name: go-demo-7-db-arbiter
+          image: docker.io/bitnami/mongodb:4.0.3
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 27017
+            name: mongodb
+          env:
+          - name: MONGODB_SYSTEM_LOG_VERBOSITY
+            value: "0"
+          - name: MONGODB_DISABLE_SYSTEM_LOG
+            value: "no"
+          - name: MONGODB_POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: MONGODB_REPLICA_SET_MODE
+            value: "arbiter"
+          - name: MONGODB_PRIMARY_HOST
+            value: go-demo-7-go-demo-7-db
+          - name: MONGODB_REPLICA_SET_NAME
+            value: "rs0"
+          - name: MONGODB_ADVERTISED_HOSTNAME
+            value: "$(MONGODB_POD_NAME).go-demo-7-go-demo-7-db-headless.go-demo-7.svc.cluster.local"
+          - name: MONGODB_ENABLE_IPV6
+            value: "yes"
+          livenessProbe:
+            tcpSocket:
+              port: mongodb
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 6
+          readinessProbe:
+            tcpSocket:
+              port: mongodb
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 6
+          volumeMounts:
+          resources:
+            {}
+            
+      volumes:

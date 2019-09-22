@@ -31,7 +31,7 @@ spec:
   subsets:
   - name: v1
     labels:
-      app: go-demo-7-go-demo-7
+      app: go-demo-7
 
 ---
 

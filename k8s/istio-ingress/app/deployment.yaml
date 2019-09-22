@@ -4,7 +4,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: go-demo-7-go-demo-7
+  name: go-demo-7
   labels:
     draft: draft-app
     chart: "go-demo-7-0.1.0-SNAPSHOT"
@@ -14,7 +14,7 @@ spec:
     metadata:
       labels:
         draft: draft-app
-        app: go-demo-7-go-demo-7
+        app: go-demo-7
     spec:
       containers:
       - name: go-demo-7
@@ -22,7 +22,7 @@ spec:
         imagePullPolicy: IfNotPresent
         env:
         - name: DB
-          value: go-demo-7-go-demo-7-db
+          value: go-demo-7-db
         ports:
         - containerPort: 8080
         livenessProbe:

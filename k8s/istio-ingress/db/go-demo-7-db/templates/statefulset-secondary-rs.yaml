@@ -9,7 +9,7 @@ metadata:
     chart: go-demo-7-db-5.3.0
     heritage: Tiller
     release: go-demo-7
-  name: go-demo-7-go-demo-7-db-secondary
+  name: go-demo-7-db-secondary
 spec:
   selector:
     matchLabels:
@@ -17,7 +17,7 @@ spec:
       release: go-demo-7
       component: secondary
   podManagementPolicy: "Parallel"
-  serviceName: go-demo-7-go-demo-7-db-headless
+  serviceName: go-demo-7-db-headless
   replicas: 1
   template:
     metadata:
@@ -49,11 +49,11 @@ spec:
           - name: MONGODB_REPLICA_SET_MODE
             value: "secondary"
           - name: MONGODB_PRIMARY_HOST
-            value: go-demo-7-go-demo-7-db
+            value: go-demo-7-db
           - name: MONGODB_REPLICA_SET_NAME
             value: "rs0"
           - name: MONGODB_ADVERTISED_HOSTNAME
-            value: "$(MONGODB_POD_NAME).go-demo-7-go-demo-7-db-headless.go-demo-7.svc.cluster.local"
+            value: "$(MONGODB_POD_NAME).go-demo-7-db-headless.go-demo-7.svc.cluster.local"
           - name: MONGODB_ENABLE_IPV6
             value: "yes"
           livenessProbe:

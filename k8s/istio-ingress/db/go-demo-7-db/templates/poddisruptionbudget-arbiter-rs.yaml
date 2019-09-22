@@ -9,7 +9,7 @@ metadata:
     chart: go-demo-7-db-5.3.0
     heritage: Tiller
     release: go-demo-7
-  name: go-demo-7-go-demo-7-db-arbiter
+  name: go-demo-7-db-arbiter
 spec:
   selector:
     matchLabels:

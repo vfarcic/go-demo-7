@@ -9,9 +9,9 @@ metadata:
     chart: go-demo-7-db-5.3.0
     heritage: Tiller
     release: go-demo-7
-  name: go-demo-7-go-demo-7-db-primary
+  name: go-demo-7-db-primary
 spec:
-  serviceName: go-demo-7-go-demo-7-db-headless
+  serviceName: go-demo-7-db-headless
   replicas: 1
   selector:
     matchLabels:
@@ -50,7 +50,7 @@ spec:
           - name: MONGODB_REPLICA_SET_NAME
             value: "rs0"
           - name: MONGODB_ADVERTISED_HOSTNAME
-            value: "$(MONGODB_POD_NAME).go-demo-7-go-demo-7-db-headless.go-demo-7.svc.cluster.local"
+            value: "$(MONGODB_POD_NAME).go-demo-7-db-headless.go-demo-7.svc.cluster.local"
           - name: MONGODB_ENABLE_IPV6
             value: "yes"
           livenessProbe:

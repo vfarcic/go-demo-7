@@ -40,6 +40,5 @@ go-demo-7-db:
   usePassword: false
 
 istio:
-  enabled: true
-  hosts:
-  - go-demo-7.acme.com
+  enabled: false
+  hosts: {}

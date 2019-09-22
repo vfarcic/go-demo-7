@@ -1,5 +1,6 @@
 ---
 # Source: go-demo-7/templates/deployment.yaml
+
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -17,7 +18,7 @@ spec:
     spec:
       containers:
       - name: go-demo-7
-        image: "draft:dev"
+        image: "docker.io/vfarcic/go-demo-7:latest"
         imagePullPolicy: IfNotPresent
         env:
         - name: DB

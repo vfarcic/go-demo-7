@@ -1,0 +1,52 @@
+---
+# Source: go-demo-7/templates/istio.yaml
+
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: go-demo-7
+spec:
+  hosts:
+  - go-demo-7.acme.com
+  
+  gateways:
+  - go-demo-7
+  http:
+  - match:
+    route:
+    - destination:
+        host: go-demo-7
+        port:
+          number: 80
+
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: go-demo-7
+spec:
+  host: go-demo-7
+  subsets:
+  - name: v1
+    labels:
+      app: go-demo-7-go-demo-7
+
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: go-demo-7
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - go-demo-7.acme.com
+    

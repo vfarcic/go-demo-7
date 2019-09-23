@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: go-demo-7
-        image: "docker.io/vfarcic/go-demo-7:latest"
+        image: "docker.io/vfarcic/go-demo-7:0.0.1"
         imagePullPolicy: IfNotPresent
         env:
         - name: DB

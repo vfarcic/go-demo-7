@@ -1,5 +1,5 @@
 ---
-# Source: go-demo-7/charts/go-demo-7-db/templates/svc-primary-rs.yaml
+# Source: go-demo-7/charts/go-demo-7-db/templates/svc-standalone.yaml
 
 apiVersion: v1
 kind: Service
@@ -19,4 +19,3 @@ spec:
   selector:
     app: go-demo-7-db
     release: "go-demo-7"
-    component: primary

@@ -33,8 +33,4 @@ readinessProbe:
   timeoutSeconds: 1
 terminationGracePeriodSeconds: 10
 go-demo-7-db:
-  replicaSet:
-    enabled: true
-
-
   usePassword: false

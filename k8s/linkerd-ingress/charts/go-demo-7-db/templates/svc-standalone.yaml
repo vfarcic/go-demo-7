@@ -1,10 +1,10 @@
 ---
-# Source: go-demo-7/charts/go-demo-7-db/templates/headless-svc-rs.yaml
+# Source: go-demo-7/charts/go-demo-7-db/templates/svc-standalone.yaml
 
 apiVersion: v1
 kind: Service
 metadata:
-  name: go-demo-7-db-headless
+  name: go-demo-7-db
   labels:
     app: go-demo-7-db
     chart: go-demo-7-db-5.3.0
@@ -12,10 +12,10 @@ metadata:
     heritage: "Tiller"
 spec:
   type: ClusterIP
-  clusterIP: None
   ports:
   - name: mongodb
     port: 27017
+    targetPort: mongodb
   selector:
     app: go-demo-7-db
-    release: go-demo-7
+    release: "go-demo-7"

@@ -1,5 +1,3 @@
----
-# Source: go-demo-7/templates/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -9,7 +7,6 @@ metadata:
   annotations:
     fabric8.io/expose: "true"
     fabric8.io/ingress.annotations: 'kubernetes.io/ingress.class: nginx'
-    
 spec:
   type: ClusterIP
   ports:

@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"testing"
 	"time"
 
@@ -88,7 +89,7 @@ func (s *MainTestSuite) Test_HelloServer_WritesHelloWorld() {
 
 	HelloServer(w, req)
 
-	w.AssertCalled(s.T(), "Write", []byte("hello, PR!\n"))
+	w.AssertCalled(s.T(), "Write", []byte("hello, Istio!\n"))
 }
 
 func (s *MainTestSuite) Test_HelloServer_Waits_WhenDelayIsPresent() {
@@ -104,6 +105,18 @@ func (s *MainTestSuite) Test_HelloServer_Waits_WhenDelayIsPresent() {
 	HelloServer(w, req)
 
 	s.Equal(10*time.Millisecond, actual)
+}
+
+// VersionServer
+
+func (s *MainTestSuite) Test_VersionServer_WritesVersion() {
+	req, _ := http.NewRequest("GET", "/version", nil)
+	w := getResponseWriterMock()
+	os.Setenv("VERSION", "1.2.3")
+
+	VersionServer(w, req)
+
+	w.AssertCalled(s.T(), "Write", []byte("Version: 1.2.3\n"))
 }
 
 // PersonServer

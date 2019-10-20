@@ -1,13 +1,17 @@
-## Replace master with orig
+# go-demo-7
+
+## Image (manual)
 
 ```bash
-git checkout orig
+make linux
 
-git merge -s ours master
+docker image build -t vfarcic/go-demo-7 .
 
-git checkout master
+VERSION=[...] # Replace `[...]` with the version/tag
 
-git merge orig
+docker image tag vfarcic/go-demo-7 vfarcic/go-demo-7:$VERSION
 
-git push
+docker image push vfarcic/go-demo-7
+
+docker image push vfarcic/go-demo-7:$VERSION
 ```

@@ -1,11 +1,9 @@
----
-# Source: go-demo-7/templates/deployment.yaml
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: go-demo-7
   labels:
-    app: "go-demo-7"
+    app: go-demo-7
 spec:
   replicas: 3
   template:
@@ -15,7 +13,7 @@ spec:
     spec:
       containers:
       - name: go-demo-7
-        image: "vfarcic/go-demo-7:0.0.1"
+        image: vfarcic/go-demo-7:0.0.1
         imagePullPolicy: IfNotPresent
         env:
         - name: DB
@@ -44,5 +42,4 @@ spec:
             requests:
               cpu: 80m
               memory: 128Mi
-            
       terminationGracePeriodSeconds: 10

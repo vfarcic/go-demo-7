@@ -93,7 +93,7 @@ func HelloServer(w http.ResponseWriter, req *http.Request) {
 		delayNum, _ := strconv.Atoi(delay)
 		sleep(time.Duration(delayNum) * time.Millisecond)
 	}
-	io.WriteString(w, "hello, Istio!\n")
+	io.WriteString(w, "hello, Istio routes!\n")
 }
 
 func VersionServer(w http.ResponseWriter, req *http.Request) {

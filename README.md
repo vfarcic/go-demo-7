@@ -5,9 +5,9 @@
 ```bash
 make linux
 
-docker image build -t vfarcic/go-demo-7 .
-
 VERSION=[...] # Replace `[...]` with the version/tag
+
+docker image build -t vfarcic/go-demo-7 .
 
 docker image tag vfarcic/go-demo-7 vfarcic/go-demo-7:$VERSION
 

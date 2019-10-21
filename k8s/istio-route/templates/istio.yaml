@@ -1,0 +1,66 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: go-demo-7
+spec:
+  hosts:
+  - go-demo-7.acme.com
+  gateways:
+  - go-demo-7
+  http:
+  - route:
+    - destination:
+        host: go-demo-7.staging
+        port:
+          number: 80
+      weight: 20
+    - destination:
+        host: go-demo-7.production
+        port:
+          number: 80
+      weight: 80
+    # - destination:
+    #     host: go-demo-7
+    #     subset: v0-0-2
+    #     port:
+    #       number: 80
+    #   weight: 20
+    # - destination:
+    #     host: go-demo-7
+    #     subset: v0-0-1
+    #     port:
+    #       number: 80
+    #   weight: 80
+
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: go-demo-7
+spec:
+  host: go-demo-7
+  subsets:
+  - name: v0-0-1
+    labels:
+      version: v0.0.1
+  - name: v0-0-2
+    labels:
+      version: v0.0.2
+
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: go-demo-7
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - go-demo-7.acme.com

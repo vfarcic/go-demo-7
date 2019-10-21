@@ -113,6 +113,7 @@ func (s *MainTestSuite) Test_VersionServer_WritesVersion() {
 	req, _ := http.NewRequest("GET", "/version", nil)
 	w := getResponseWriterMock()
 	os.Setenv("VERSION", "1.2.3")
+	defer func() { os.Unsetenv("VERSION") }()
 
 	VersionServer(w, req)
 

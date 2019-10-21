@@ -76,6 +76,7 @@ func RunServer() {
 	logPrintf("Running the server\n")
 	mux := http.NewServeMux()
 	mux.HandleFunc("/demo/hello", HelloServer)
+	mux.HandleFunc("/version", VersionServer)
 	mux.HandleFunc("/demo/person", PersonServer)
 	mux.HandleFunc("/demo/random-error", RandomErrorServer)
 	mux.Handle("/metrics", prometheusHandler())
@@ -92,7 +93,13 @@ func HelloServer(w http.ResponseWriter, req *http.Request) {
 		delayNum, _ := strconv.Atoi(delay)
 		sleep(time.Duration(delayNum) * time.Millisecond)
 	}
-	io.WriteString(w, "hello, PR!\n")
+	io.WriteString(w, "hello, Istio!\n")
+}
+
+func VersionServer(w http.ResponseWriter, req *http.Request) {
+	logPrintf("%s request to %s\n", req.Method, req.RequestURI)
+	msg := fmt.Sprintf("Version: %s\n", os.Getenv("VERSION"))
+	io.WriteString(w, msg)
 }
 
 func RandomErrorServer(w http.ResponseWriter, req *http.Request) {

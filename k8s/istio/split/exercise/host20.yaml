@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: go-demo-7-primary
+  labels:
+    app: go-demo-7
+    release: primary
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 8080
+    protocol: TCP
+    name: http
+  selector:
+    app: go-demo-7
+    release: primary
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: go-demo-7-canary
+  labels:
+    app: go-demo-7
+    release: canary
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 8080
+    protocol: TCP
+    name: http
+  selector:
+    app: go-demo-7
+    release: canary
+
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: go-demo-7
+spec:
+  hosts:
+  - go-demo-7.acme.com
+  gateways:
+  - go-demo-7
+  http:
+  - route:
+    - destination:
+        host: go-demo-7-canary
+        port:
+          number: 80
+      weight: 20
+    - destination:
+        host: go-demo-7-primary
+        port:
+          number: 80
+      weight: 80

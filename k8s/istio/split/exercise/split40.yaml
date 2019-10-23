@@ -1,0 +1,31 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: go-demo-7
+spec:
+  hosts:
+  - go-demo-7.acme.com
+  gateways:
+  - go-demo-7
+  http:
+  - route:
+    - destination:
+        host: go-demo-7
+        subset: canary
+        port:
+          number: 80
+      weight: 40
+      headers:
+        request:
+          set:
+            release: canary
+    - destination:
+        host: go-demo-7
+        subset: primary
+        port:
+          number: 80
+      weight: 60
+      headers:
+        request:
+          set:
+            release: primary

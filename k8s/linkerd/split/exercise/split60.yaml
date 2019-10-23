@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: go-demo-7-primary
+  labels:
+    app: go-demo-7
+    release: primary
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 8080
+    protocol: TCP
+    name: http
+  selector:
+    app: go-demo-7
+    release: primary
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: go-demo-7-canary
+  labels:
+    app: go-demo-7
+    release: canary
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 8080
+    protocol: TCP
+    name: http
+  selector:
+    app: go-demo-7
+    release: canary
+
+---
+
+apiVersion: split.smi-spec.io/v1alpha1
+kind: TrafficSplit
+metadata:
+  name: go-demo-7
+spec:
+  service: go-demo-7
+  backends:
+  - service: go-demo-7-canary
+    weight: 60
+  - service: go-demo-7-primary
+    weight: 40

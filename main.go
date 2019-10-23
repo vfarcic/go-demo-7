@@ -98,7 +98,11 @@ func HelloServer(w http.ResponseWriter, req *http.Request) {
 
 func VersionServer(w http.ResponseWriter, req *http.Request) {
 	logPrintf("%s request to %s\n", req.Method, req.RequestURI)
-	msg := fmt.Sprintf("Version: %s\n", os.Getenv("VERSION"))
+	release := req.Header.Get("release")
+	if release == "" {
+		release = "unknown"
+	}
+	msg := fmt.Sprintf("Version: %s; Release: %s\n", os.Getenv("VERSION"), release)
 	io.WriteString(w, msg)
 }
 

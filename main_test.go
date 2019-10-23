@@ -117,7 +117,19 @@ func (s *MainTestSuite) Test_VersionServer_WritesVersion() {
 
 	VersionServer(w, req)
 
-	w.AssertCalled(s.T(), "Write", []byte("Version: 1.2.3\n"))
+	w.AssertCalled(s.T(), "Write", []byte("Version: 1.2.3; Release: unknown\n"))
+}
+
+func (s *MainTestSuite) Test_VersionServer_WritesRelease() {
+	req, _ := http.NewRequest("GET", "/version", nil)
+	req.Header.Set("release", "canary")
+	w := getResponseWriterMock()
+	os.Setenv("VERSION", "1.2.3")
+	defer func() { os.Unsetenv("VERSION") }()
+
+	VersionServer(w, req)
+
+	w.AssertCalled(s.T(), "Write", []byte("Version: 1.2.3; Release: canary\n"))
 }
 
 // PersonServer

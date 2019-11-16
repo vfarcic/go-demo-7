@@ -1,0 +1,16 @@
+---
+
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: go-demo-7
+  annotations:
+    kubernetes.io/ingress.class: istio
+spec:
+  rules:
+  - host: go-demo-7.acme.com
+    http:
+      paths:
+      - backend:
+          serviceName: go-demo-7
+          servicePort: 80

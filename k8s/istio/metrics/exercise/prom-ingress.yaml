@@ -1,26 +1,26 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: go-demo-7
+  name: prometheus
 spec:
   hosts:
-  - go-demo-7.acme.com
+  - prometheus.acme.com
   gateways:
-  - go-demo-7
+  - prometheus
   http:
   - match:
     route:
     - destination:
-        host: go-demo-7
+        host: prometheus
         port:
-          number: 80
+          number: 9090
 
 ---
 
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: go-demo-7
+  name: prometheus
 spec:
   selector:
     istio: ingressgateway
@@ -30,4 +30,4 @@ spec:
       name: http
       protocol: HTTP
     hosts:
-    - go-demo-7.acme.com
+    - prometheus.acme.com

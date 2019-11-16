@@ -80,6 +80,7 @@ func RunServer() {
 	mux.HandleFunc("/demo/person", PersonServer)
 	mux.HandleFunc("/demo/random-error", RandomErrorServer)
 	mux.Handle("/metrics", prometheusHandler())
+	mux.HandleFunc("/", VersionServer)
 	logFatal("ListenAndServe: ", httpListenAndServe(":8080", mux))
 }
 
@@ -93,7 +94,7 @@ func HelloServer(w http.ResponseWriter, req *http.Request) {
 		delayNum, _ := strconv.Atoi(delay)
 		sleep(time.Duration(delayNum) * time.Millisecond)
 	}
-	io.WriteString(w, "hello, Istio routes!\n")
+	io.WriteString(w, "hello, Istio!\n")
 }
 
 func VersionServer(w http.ResponseWriter, req *http.Request) {

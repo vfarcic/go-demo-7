@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: go-demo-7-primary
@@ -6,6 +6,10 @@ metadata:
     app: go-demo-7
     release: primary
 spec:
+  selector:
+    matchLabels:
+      app: go-demo-7
+      release: primary
   replicas: 3
   template:
     metadata:
@@ -37,5 +41,5 @@ spec:
               cpu: 100m
               memory: 256Mi
             requests:
-              cpu: 80m
+              cpu: 50m
               memory: 128Mi

@@ -1,7 +1,7 @@
 ---
 # Source: go-demo-7/charts/go-demo-7-db/templates/deployment-standalone.yaml
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: go-demo-7-db

@@ -1,0 +1,18 @@
+---
+# Source: go-demo-7/charts/go-demo-7-db/templates/pvc-standalone.yaml
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  labels:
+    app: go-demo-7-db
+    chart: go-demo-7-db-5.3.0
+    heritage: Tiller
+    release: go-demo-7
+  name: go-demo-7-db
+spec:
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "8Gi"

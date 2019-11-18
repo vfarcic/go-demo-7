@@ -1,0 +1,29 @@
+---
+
+apiVersion: flagger.app/v1alpha3
+kind: Canary
+metadata:
+  name: go-demo-7
+spec:
+  provider: istio
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: go-demo-7
+  progressDeadlineSeconds: 60
+  autoscalerRef:
+    apiVersion: autoscaling/v2beta1
+    kind: HorizontalPodAutoscaler
+    name: go-demo-7
+  service:
+    port: 80
+    targetPort: 8080
+    gateways:
+    - go-demo-7
+    hosts:
+    - go-demo-7.acme.com
+  canaryAnalysis:
+    interval: 1m
+    threshold: 5
+    maxWeight: 60
+    stepWeight: 20

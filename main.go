@@ -114,8 +114,13 @@ func RandomErrorServer(w http.ResponseWriter, req *http.Request) {
 
 	logPrintf("%s request to %s\n", req.Method, req.RequestURI)
 	rand.Seed(time.Now().UnixNano())
-	n := rand.Intn(10)
-	msg := "Everything is still OK\n"
+	n := rand.Intn(5)
+	msg := "Everything is still OK"
+	version := os.Getenv("VERSION")
+	if len(version) > 0 {
+		msg = fmt.Sprintf("%s with version %s", msg, version)
+	}
+	msg = fmt.Sprintf("%s\n", msg)
 	if n == 0 {
 		code = http.StatusInternalServerError
 		msg = "ERROR: Something, somewhere, went wrong!\n"

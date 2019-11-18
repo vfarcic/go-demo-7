@@ -59,7 +59,7 @@ func (s *MainTestSuite) Test_RunServer_InvokesListenAndServe() {
 
 // RandomErrorServer
 
-func (s *MainTestSuite) Test_HelloServer_WritesOk() {
+func (s *MainTestSuite) Test_RandomErrorServer_WritesOk() {
 	req, _ := http.NewRequest("GET", "/demo/random-error", nil)
 	w := getResponseWriterMock()
 
@@ -70,7 +70,7 @@ func (s *MainTestSuite) Test_HelloServer_WritesOk() {
 	w.AssertCalled(s.T(), "Write", []byte("Everything is still OK\n"))
 }
 
-func (s *MainTestSuite) Test_HelloServer_WritesNokEventually() {
+func (s *MainTestSuite) Test_RandomErrorServer_WritesNokEventually() {
 	req, _ := http.NewRequest("GET", "/demo/random-error", nil)
 	w := getResponseWriterMock()
 
@@ -79,6 +79,19 @@ func (s *MainTestSuite) Test_HelloServer_WritesNokEventually() {
 	}
 
 	w.AssertCalled(s.T(), "Write", []byte("ERROR: Something, somewhere, went wrong!\n"))
+}
+
+func (s *MainTestSuite) Test_RandomErrorServer_WritesVersion() {
+	req, _ := http.NewRequest("GET", "/version", nil)
+	w := getResponseWriterMock()
+	os.Setenv("VERSION", "1.2.3")
+	defer func() { os.Unsetenv("VERSION") }()
+
+	for i := 0; i <= 3; i++ {
+		RandomErrorServer(w, req)
+	}
+
+	w.AssertCalled(s.T(), "Write", []byte("Everything is still OK with version 1.2.3\n"))
 }
 
 // HelloServer

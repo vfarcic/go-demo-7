@@ -24,6 +24,13 @@ spec:
     - go-demo-7.acme.com
   canaryAnalysis:
     interval: 1m
-    threshold: 5
+    threshold: 3
     maxWeight: 60
     stepWeight: 20
+    metrics:
+    - name: request-success-rate
+      threshold: 99
+      interval: 1m
+    - name: request-duration
+      threshold: 1000
+      interval: 1m

@@ -120,6 +120,17 @@ func (s *MainTestSuite) Test_HelloServer_Waits_WhenDelayIsPresent() {
 	s.Equal(10*time.Millisecond, actual)
 }
 
+func (s *MainTestSuite) Test_HelloServer_OutputsVersion() {
+	req, _ := http.NewRequest("GET", "/demo/hello", nil)
+	w := getResponseWriterMock()
+	os.Setenv("VERSION", "1.2.3")
+	defer func() { os.Unsetenv("VERSION") }()
+
+	HelloServer(w, req)
+
+	w.AssertCalled(s.T(), "Write", []byte("hello, Istio with version 1.2.3!\n"))
+}
+
 // VersionServer
 
 func (s *MainTestSuite) Test_VersionServer_WritesVersion() {

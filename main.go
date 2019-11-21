@@ -90,11 +90,17 @@ func HelloServer(w http.ResponseWriter, req *http.Request) {
 
 	logPrintf("%s request to %s\n", req.Method, req.RequestURI)
 	delay := req.URL.Query().Get("delay")
+	msg := "hello, Istio"
+	version := os.Getenv("VERSION")
+	if len(version) > 0 {
+		msg = fmt.Sprintf("%s with version %s", msg, version)
+	}
+	msg = fmt.Sprintf("%s!\n", msg)
 	if len(delay) > 0 {
 		delayNum, _ := strconv.Atoi(delay)
 		sleep(time.Duration(delayNum) * time.Millisecond)
 	}
-	io.WriteString(w, "hello, Istio!\n")
+	io.WriteString(w, msg)
 }
 
 func VersionServer(w http.ResponseWriter, req *http.Request) {

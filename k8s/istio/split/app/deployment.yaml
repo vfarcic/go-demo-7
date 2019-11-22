@@ -54,6 +54,10 @@ metadata:
     app: go-demo-7
     release: canary
 spec:
+  selector:
+    matchLabels:
+      app: go-demo-7
+      release: canary
   replicas: 0
   template:
     metadata:

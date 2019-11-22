@@ -9,7 +9,7 @@ spec:
   selector:
     matchLabels:
       app: go-demo-7
-      release: canary
+      release: primary
   replicas: 3
   template:
     metadata:

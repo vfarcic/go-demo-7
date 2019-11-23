@@ -21,6 +21,7 @@ while true; do
         break
     elif [[ "$PROGRESSING" == "true" && "$STATUS" == 'Failed' ]]; then
         echo "Canary deployment failed"
+        EXIT_CODE=1
         break
     fi
 

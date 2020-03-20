@@ -1,6 +1,6 @@
 ---
 
-apiVersion: flagger.app/v1alpha3
+apiVersion: flagger.app/v1beta1
 kind: Canary
 metadata:
   name: go-demo-7
@@ -22,7 +22,7 @@ spec:
     - go-demo-7
     hosts:
     - go-demo-7.acme.com
-  canaryAnalysis:
+  analysis:
     interval: 1m
     threshold: 5
     maxWeight: 60
